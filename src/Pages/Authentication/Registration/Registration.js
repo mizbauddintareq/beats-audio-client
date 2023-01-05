@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
 
 const Registration = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUsers } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -15,12 +15,35 @@ const Registration = () => {
     createUser(data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
+        handleUpdateUsersInfo({ displayName: data.name });
+
+        const usersInfo = {
+          name: data.name,
+          email: data.email,
+          role: data.role,
+        };
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(usersInfo),
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            console.log(result);
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
         console.error(errorCode);
       });
+  };
+
+  const handleUpdateUsersInfo = (info) => {
+    updateUsers(info)
+      .then(() => {})
+      .catch((error) => {});
   };
 
   return (
@@ -72,11 +95,11 @@ const Registration = () => {
             className="select select-bordered w-full"
             {...register("role")}
           >
-            <option value="Buyer" selected>
+            <option value="buyer" selected>
               Buyer
             </option>
-            <option value="User">User</option>
-            <option value="Seller">Seller</option>
+            <option value="user">User</option>
+            <option value="seller">Seller</option>
           </select>
         </div>
 
