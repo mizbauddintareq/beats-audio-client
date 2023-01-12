@@ -1,8 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../../Home/Home/Home";
 import Main from "../../layouts/Main";
-import Login from "../../Pages/Authentication/Login/Login";
-import Registration from "../../Pages/Authentication/Registration/Registration";
+import Home from "../../Pages/Home/Home/Home";
+import Products from "../../Pages/Products/Products";
 
 export const router = createBrowserRouter([
   {
@@ -14,12 +13,10 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "signup",
-        element: <Registration />,
-      },
-      {
-        path: "login",
-        element: <Login />,
+        path: "products/category/:name",
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/products/category/${params.name}`),
+        element: <Products />,
       },
     ],
   },
