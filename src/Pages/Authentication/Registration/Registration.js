@@ -6,7 +6,8 @@ import { errorAlert } from "../../../utilities/errorAlert";
 import { successAlert } from "../../../utilities/successAlert";
 
 const Registration = () => {
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, googleLogin } =
+    useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,7 +17,6 @@ const Registration = () => {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm();
   const onSubmit = (data) => {
     createUser(data.email, data.password)
@@ -26,9 +26,15 @@ const Registration = () => {
           displayName: data.name,
         };
         handleUpdateUser(userProfile);
-        successAlert("Registration Successful");
+
+        const userInfo = {
+          name: data.name,
+          email: data.email,
+          role: data.role,
+        };
+        savedUser(userInfo);
+
         navigate(from, { replace: true });
-        reset();
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -41,6 +47,39 @@ const Registration = () => {
     updateUserProfile(info)
       .then(() => {})
       .catch((error) => {});
+  };
+
+  const savedUser = (userInfo) => {
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        successAlert("Registration Successful");
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        const userInfo = {
+          name: user.displayName,
+          email: user.email,
+          role: "buyer",
+        };
+        savedUser(userInfo);
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        errorAlert(errorCode);
+      });
   };
 
   return (
@@ -77,6 +116,17 @@ const Registration = () => {
                 <p className="text-error">{errors.email?.message}</p>
               )}
             </div>
+
+            <div className="form-control w-full my-4">
+              <label className="label">
+                <span className="label-text">Select Role</span>
+              </label>
+              <select {...register("role")} className="select select-bordered">
+                <option value="buyer">User/Buyer</option>
+                <option value="seller">Seller</option>
+              </select>
+            </div>
+
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text dark:text-white">Password</span>
@@ -118,7 +168,7 @@ const Registration = () => {
               </Link>{" "}
             </p>
             <div className="divider">OR</div>
-            <h1>Google login</h1>
+            <button onClick={handleGoogleLogin}>Google login</button>
           </div>
         </div>
       </div>
