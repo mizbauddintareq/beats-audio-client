@@ -4,6 +4,8 @@ import Main from "../../layouts/Main";
 import Login from "../../Pages/Authentication/Login/Login";
 import Registration from "../../Pages/Authentication/Registration/Registration";
 import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
+import AllBuyers from "../../Pages/Dashboard/AllBuyers/AllBuyers";
+import AllSellers from "../../Pages/Dashboard/AllSellers/AllSellers";
 import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
 import MyProducts from "../../Pages/Dashboard/MyProduct/MyProducts";
 
@@ -59,6 +61,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/my-product",
         element: <MyProducts />,
+      },
+      {
+        path: "/dashboard/all-sellers",
+        element: <AllSellers />,
+      },
+      {
+        path: "/dashboard/all-buyers",
+        element: <AllBuyers />,
       },
     ],
   },

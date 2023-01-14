@@ -125,7 +125,7 @@ const AddProduct = () => {
                   Select Condition
                 </option>
                 <option defaultValue="good">Good</option>
-                <option defaultValue="fresh">Fresh</option>
+                <option defaultValue="fair">Fair</option>
                 <option defaultValue="excellent">Excellent</option>
               </select>
             </div>

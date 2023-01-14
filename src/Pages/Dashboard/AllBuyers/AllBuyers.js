@@ -3,11 +3,11 @@ import Swal from "sweetalert2";
 import { successAlert } from "../../../utilities/successAlert";
 import Loader from "../../Shared/Loader/Loader";
 
-const AllSellers = () => {
+const AllBuyers = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users/sellers");
+      const res = await fetch("http://localhost:5000/users/buyers");
       const data = await res.json();
       return data;
     },
@@ -33,7 +33,7 @@ const AllSellers = () => {
           .then((res) => res.json())
           .then((result) => {
             if (result.deletedCount > 0) {
-              successAlert("user han been deleted");
+              successAlert("buyer han been deleted");
               refetch();
             }
           });
@@ -75,4 +75,4 @@ const AllSellers = () => {
   );
 };
 
-export default AllSellers;
+export default AllBuyers;
