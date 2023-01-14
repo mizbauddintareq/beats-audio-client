@@ -10,7 +10,7 @@ const MyOrders = () => {
     queryKey: ["myOrders"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/my-orders?email=${user?.email}`
+        `https://beats-audio-server.vercel.app/my-orders?email=${user?.email}`
       );
       const data = await res.json();
       return data;

@@ -12,7 +12,7 @@ const MyProducts = () => {
     queryKey: ["myProducts"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/my-products?email=${user?.email}`
+        `https://beats-audio-server.vercel.app/my-products?email=${user?.email}`
       );
       const data = await res.json();
       return data;
@@ -33,7 +33,7 @@ const MyProducts = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/products/${id}`, {
+        fetch(`https://beats-audio-server.vercel.app/products/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

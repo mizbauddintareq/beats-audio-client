@@ -8,7 +8,9 @@ const DashboardLayout = () => {
   const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users/role?email=${user?.email}`)
+    fetch(
+      `https://beats-audio-server.vercel.app/users/role?email=${user?.email}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setUserRole(data);

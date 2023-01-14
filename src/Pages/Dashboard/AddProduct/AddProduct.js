@@ -41,7 +41,7 @@ const AddProduct = () => {
         };
 
         // save doctors info to db
-        fetch("http://localhost:5000/products", {
+        fetch("https://beats-audio-server.vercel.app/products", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -58,7 +58,7 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/categories")
+    fetch("https://beats-audio-server.vercel.app/categories")
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);

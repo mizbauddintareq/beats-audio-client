@@ -7,7 +7,9 @@ const AllBuyers = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users/buyers");
+      const res = await fetch(
+        "https://beats-audio-server.vercel.app/users/buyers"
+      );
       const data = await res.json();
       return data;
     },
@@ -27,7 +29,7 @@ const AllBuyers = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/users/${id}`, {
+        fetch(`https://beats-audio-server.vercel.app/users/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

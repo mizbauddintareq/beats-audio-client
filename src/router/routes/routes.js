@@ -33,7 +33,9 @@ export const router = createBrowserRouter([
       {
         path: "products/category/:name",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/products/category/${params.name}`),
+          fetch(
+            `https://beats-audio-server.vercel.app/products/category/${params.name}`
+          ),
         element: (
           <PrivateRoute>
             <Products />
