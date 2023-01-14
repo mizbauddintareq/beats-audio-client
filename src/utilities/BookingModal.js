@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { useForm } from "react-hook-form";
+
 import { AuthContext } from "../context/AuthProvider";
 import { successAlert } from "./successAlert";
 
 const BookingModal = ({ product, setProduct }) => {
-  const { name, categoryName, seller, img, price } = product;
+  const { name, image, resalePrice } = product;
   const { user } = useContext(AuthContext);
 
   const handleBooking = (e) => {
@@ -26,7 +26,7 @@ const BookingModal = ({ product, setProduct }) => {
       price,
       phone,
       location,
-      img,
+      image,
     };
     fetch("http://localhost:5000/bookings", {
       method: "POST",
@@ -85,7 +85,7 @@ const BookingModal = ({ product, setProduct }) => {
             <input
               type="text"
               name="price"
-              defaultValue={price}
+              defaultValue={resalePrice}
               disabled
               className="input w-full  input-bordered "
             />

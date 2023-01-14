@@ -1,26 +1,59 @@
 const Product = ({ product, setProduct }) => {
-  const { name, categoryName, seller, img } = product;
+  const {
+    buyingPrice,
+    condition,
+    details,
+    image,
+    name,
+    postedDate,
+    resalePrice,
+    seller,
+    yearsOfPurchase,
+    yearsOfUse,
+  } = product;
   return (
     <div>
-      <div className="card bg-base-100 shadow-xl">
+      <div className="card h-full shadow-xl">
         <figure>
-          <img src={img} alt="product-img" />
+          <img src={image} alt="Shoes" />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{name}</h2>
-          <p>{categoryName}</p>
-          <p>{seller}</p>
+          <h2 className="card-title">
+            {name}
+
+            <div className="badge badge-secondary">{condition}</div>
+          </h2>
+          <div>
+            <h3 className="text-xl font-semibold">Price: ${resalePrice}</h3>
+            <p>{details}</p>
+            <p>
+              <span className="font-semibold">Buying Price:</span> {buyingPrice}
+            </p>
+
+            <p>
+              <span className="font-semibold">Seller:</span> {seller}
+            </p>
+            <p>
+              <span className="font-semibold">Posted Date:</span> {postedDate}{" "}
+              <span className="font-semibold">Purchase Year:</span>{" "}
+              {yearsOfPurchase}{" "}
+              <span className="font-semibold">{yearsOfUse}</span> Years Use
+            </p>
+          </div>
           <div className="card-actions justify-end">
-            <label
-              htmlFor="booking-modal"
-              className="btn btn-primary"
-              onClick={() => setProduct(product)}
-            >
-              book now
-            </label>
+            <div>
+              <label
+                className="btn btn-primary"
+                htmlFor="booking-modal"
+                onClick={() => setProduct(product)}
+              >
+                book now
+              </label>
+            </div>
           </div>
         </div>
       </div>
+      ;
     </div>
   );
 };

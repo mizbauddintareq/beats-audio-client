@@ -44,10 +44,10 @@ const DashboardLayout = () => {
               {userRole?.role === "seller" && (
                 <>
                   <li>
-                    <Link>Add A Product</Link>
+                    <Link to="/dashboard/add-product">Add A Product</Link>
                   </li>
                   <li>
-                    <Link>My Product</Link>
+                    <Link to="/dashboard/my-product">My Product</Link>
                   </li>
                 </>
               )}
