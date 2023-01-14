@@ -1,97 +1,116 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../context/AuthProvider";
+import { successAlert } from "./successAlert";
 
 const BookingModal = ({ product, setProduct }) => {
   const { name, categoryName, seller, img, price } = product;
-  const date = new Date().toISOString().split("T")[0];
+  const { user } = useContext(AuthContext);
 
-  const { register, handleSubmit } = useForm();
+  const handleBooking = (e) => {
+    e.preventDefault();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setProduct(null);
+    const form = e.target;
+
+    const buyerName = form.name.value;
+    const email = form.email.value;
+    const product = form.product.value;
+    const price = form.price.value;
+    const phone = form.phone.value;
+    const location = form.location.value;
+
+    const bookingInfo = {
+      buyerName,
+      email,
+      product,
+      price,
+      phone,
+      location,
+    };
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bookingInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged === true) {
+          successAlert("Booking Confirmed");
+          setProduct(null);
+        }
+      });
   };
 
   return (
-    <div>
+    <>
       <input type="checkbox" id="booking-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box">
+        <div className="modal-box relative dark:bg-slate-900 dark:text-white">
           <label
             htmlFor="booking-modal"
-            className="btn btn-sm btn-circle absolute right-2 top-2"
+            className="btn btn-sm btn-circle dark:bg-white dark:text-slate-900 bg-slate-900 absolute right-2 top-2"
           >
             ✕
           </label>
-          <h3 className="font-bold text-lg">{name}</h3>
+          <h3 className="text-lg font-bold dark:text-secondary">{name}</h3>
+          <form
+            onSubmit={handleBooking}
+            className="grid grid-cols-1 gap-3 mt-8"
+          >
+            <input
+              type="text"
+              name="name"
+              defaultValue={user?.displayName}
+              disabled
+              className="input w-full input-bordered "
+            />
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text dark:text-white">Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="User Name"
-                className="input  w-full input-bordered"
-                {...register("name")}
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text dark:text-white">Email</span>
-              </label>
-              <input
-                type="email"
-                placeholder="Email"
-                className="input w-full  input-bordered"
-                {...register("email")}
-              />
-            </div>
+            <input
+              type="email"
+              name="email"
+              defaultValue={user?.email}
+              disabled
+              className="input w-full  input-bordered "
+            />
+            <input
+              type="text"
+              name="product"
+              defaultValue={name}
+              disabled
+              className="input w-full  input-bordered "
+            />
+            <input
+              type="text"
+              name="price"
+              defaultValue={price}
+              disabled
+              className="input w-full  input-bordered "
+            />
 
-            <div className="form-control w-full hidden">
-              <label className="label">
-                <span className="label-text dark:text-white">Product</span>
-              </label>
-              <input
-                type="text"
-                value={name}
-                className="input w-full  input-bordered"
-                {...register("product")}
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text dark:text-white">Price</span>
-              </label>
-              <input
-                type="text"
-                value={price}
-                className="input w-full  input-bordered"
-                {...register("price")}
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text dark:text-white">Date (Y/M/D)</span>
-              </label>
-              <input
-                type="text"
-                value={date}
-                className="input w-full  input-bordered"
-                {...register("date")}
-              />
-            </div>
-            <div className="form-control w-full my-4">
-              <input
-                type="submit"
-                value="Booked"
-                className="btn w-full input-bordered"
-              />
-            </div>
+            <input
+              type="number"
+              name="phone"
+              placeholder="Phone Number"
+              className="input w-full"
+            />
+            <input
+              type="text"
+              name="location"
+              placeholder="Meeting location"
+              className="input w-full"
+            />
+
+            <input
+              type="submit"
+              value="booked"
+              className="input btn btn-warning  w-full input-bordered"
+            />
           </form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
