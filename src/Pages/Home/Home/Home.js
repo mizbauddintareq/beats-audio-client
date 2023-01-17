@@ -1,9 +1,13 @@
+import About from "../About/About";
+import Banner from "../Banner/Banner";
 import Categories from "../Categories/Categories";
 
 const Home = () => {
   return (
-    <div className="w-9/12 mx-auto">
+    <div>
+      <Banner />
       <Categories />
+      <About />
     </div>
   );
 };

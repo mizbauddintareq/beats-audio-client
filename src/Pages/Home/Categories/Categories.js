@@ -19,7 +19,10 @@ const Categories = () => {
   }
 
   return (
-    <div>
+    <div className="md:w-11/12 mx-auto mt-16">
+      <h1 className="text-center text-5xl font-bold uppercase my-6">
+        Categories
+      </h1>
       <div className="grid md:grid-cols-3 grid-cols-1 gap-6">
         {data.map((category) => (
           <div className="card shadow-xl" key={category._id}>
@@ -35,7 +38,9 @@ const Categories = () => {
 
               <div className="card-actions">
                 <Link to={`products/category/${category.categoryName}`}>
-                  <button className="btn btn-primary btn-sm">See All</button>
+                  <button className="btn btn-warning font-bold px-6">
+                    See All
+                  </button>
                 </Link>
               </div>
             </div>

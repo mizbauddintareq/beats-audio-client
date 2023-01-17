@@ -33,8 +33,6 @@ const Registration = () => {
           role: data.role,
         };
         savedUser(userInfo);
-
-        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -60,6 +58,7 @@ const Registration = () => {
       .then((res) => res.json())
       .then((data) => {
         successAlert("Registration Successful");
+        navigate(from, { replace: true });
       });
   };
 
